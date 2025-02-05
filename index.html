@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Pressure Monitor</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Toast Notification -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- First Time Login Section -->
+    <div id="firstTimeLogin" class="container mx-auto px-4 py-8 max-w-md">
+        <div class="bg-white rounded-2xl shadow-sm p-8">
+            <div class="text-center mb-8">
+                <div class="flex items-center justify-center gap-2 mb-4">
+                    <i class="fas fa-heartbeat text-red-500 text-2xl"></i>
+                    <h1 class="text-2xl font-bold text-gray-800">Welcome to</h1>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800">Blood Pressure Monitor</h2>
+            </div>
+            
+            <form id="userRegistrationForm" class="space-y-6">
+                <div class="relative flex items-center">
+                    <div class="absolute left-3 flex items-center pointer-events-none">
+                        <i class="fas fa-user text-gray-400 text-lg"></i>
+                    </div>
+                    <input type="text" 
+                           id="userName" 
+                           class="w-full pl-11 pr-4 py-3.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-700"
+                           placeholder="Enter your name" 
+                           required>
+                </div>
+                
+                <div class="relative flex items-center">
+                    <div class="absolute left-3 flex items-center pointer-events-none">
+                        <i class="fas fa-calendar text-gray-400 text-lg"></i>
+                    </div>
+                    <input type="date" 
+                           id="userBirthdate" 
+                           class="w-full pl-11 pr-4 py-3.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-700 appearance-none placeholder-gray-400"
+                           placeholder="Select your birthdate"
+                           required>
+                </div>
+
+                <button type="submit" 
+                        class="w-full bg-blue-500 text-white py-3.5 rounded-lg hover:bg-blue-600 transition duration-300 flex items-center justify-center gap-2 mt-8">
+                    <i class="fas fa-sign-in-alt text-lg"></i>
+                    <span class="text-base font-medium">Register</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main App Section -->
+    <div id="mainApp" class="container mx-auto px-4 py-8" style="display: none;">
+        <div class="bg-white rounded-lg p-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                <i class="fas fa-heartbeat text-red-500 mr-2"></i>
+                Blood Pressure Monitor
+            </h2>
+            <div id="userInfo" class="mb-6 p-4 bg-blue-50 rounded-lg">
+                <p class="text-gray-700">
+                    <i class="fas fa-user-circle mr-2"></i>
+                    Welcome, <span id="displayName" class="font-semibold"></span> 
+                    <span class="ml-2 text-gray-500">
+                        <i class="fas fa-birthday-cake mr-1"></i>
+                        Age: <span id="userAge"></span>
+                    </span>
+                </p>
+            </div>
+
+            <!-- Calendar Section -->
+            <div id="calendar" class="mb-8"></div>
+
+            <!-- Blood Pressure Form -->
+            <form id="bpForm" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="space-y-4">
+                    <div class="relative">
+                        <label class="block text-gray-700 mb-2">
+                            <i class="far fa-clock mr-2"></i>Date:
+                        </label>
+                        <input type="datetime-local" id="bpDate" required readonly
+                               class="w-full px-4 py-2 border rounded-lg bg-gray-50">
+                    </div>
+                    <div class="relative">
+                        <label class="block text-gray-700 mb-2">
+                            <i class="fas fa-arrow-up mr-2"></i>Systolic (mmHg):
+                        </label>
+                        <input type="number" id="systolic" required
+                               class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="relative">
+                        <label class="block text-gray-700 mb-2">
+                            <i class="fas fa-arrow-down mr-2"></i>Diastolic (mmHg):
+                        </label>
+                        <input type="number" id="diastolic" required
+                               class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div class="relative">
+                        <label class="block text-gray-700 mb-2">
+                            <i class="fas fa-heartbeat mr-2"></i>Pulse (bpm):
+                        </label>
+                        <input type="number" id="pulse" required
+                               class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="relative">
+                        <label class="block text-gray-700 mb-2">
+                            <i class="fas fa-comment mr-2"></i>Comments:
+                        </label>
+                        <textarea id="comments"
+                                  class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 h-24"></textarea>
+                    </div>
+                    <button type="submit" 
+                            class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-3 rounded-lg hover:from-green-600 hover:to-green-700 transition duration-300 flex items-center justify-center">
+                        <i class="fas fa-save mr-2"></i>
+                        Submit
+                    </button>
+                </div>
+            </form>
+
+            <!-- Data Display Section -->
+            <div id="bpDataDisplay" class="overflow-x-auto mb-8"></div>
+
+            <!-- Chart Section -->
+            <div class="chart-container bg-white rounded-lg shadow p-4 mb-8">
+                <div style="position: relative; height: 50vh; min-height: 300px;">
+                    <canvas id="bpChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Add this after the chart container -->
+            <button id="testMonthChange" 
+                    class="mb-4 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors">
+                Test Month Change
+            </button>
+
+            <!-- Add this after the Chart Section and before the Action Buttons -->
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold text-gray-800">History</h3>
+                <button id="toggleHistory" class="text-blue-500 hover:text-blue-600">
+                    <i class="fas fa-history mr-2"></i>View History
+                </button>
+            </div>
+
+            <!-- History Modal -->
+            <div id="historyModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+                <div class="bg-white rounded-lg max-w-4xl mx-auto mt-20 p-6 max-h-[80vh] overflow-y-auto">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800">Monthly History</h2>
+                        <button id="closeHistory" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <div id="historyList" class="space-y-4">
+                        <!-- Monthly history items will be inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+                <button id="downloadPDF" 
+                        class="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 px-6 rounded-lg hover:from-blue-600 hover:to-blue-700 transition duration-300 flex items-center justify-center">
+                    <i class="fas fa-download mr-2"></i>
+                    Download PDF Report
+                </button>
+                <button id="sharePDF"
+                        class="flex-1 bg-gradient-to-r from-purple-500 to-purple-600 text-white py-3 px-6 rounded-lg hover:from-purple-600 hover:to-purple-700 transition duration-300 flex items-center justify-center">
+                    <i class="fas fa-share-alt mr-2"></i>
+                    Share Report
+                </button>
+            </div>
+
+            <!-- Footer -->
+            <footer class="text-center text-gray-600 pt-8 border-t">
+                <p>&copy; 2025 Chamuditha Lanka</p>
+            </footer>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,408 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    animation: slideIn 0.5s ease-out;
+}
+
+.calendar-container {
+    margin: 20px 0;
+    padding: 10px;
+    background: white;
+    border-radius: 5px;
+}
+
+.bp-form {
+    margin: 20px 0;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="datetime-local"],
+input[type="number"],
+textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.chart-container {
+    margin: 20px 0;
+    padding: 20px;
+    background: white;
+    border-radius: 5px;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    padding: 20px;
+    color: #666;
+}
+
+/* Calendar Styles */
+.calendar-wrapper {
+    @apply bg-white rounded-lg shadow-sm max-w-md mx-auto;
+}
+
+.calendar-nav {
+    @apply flex items-center justify-between p-4 border-b;
+}
+
+.nav-btn {
+    @apply p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors duration-200;
+}
+
+.month-year {
+    @apply text-xl font-semibold text-gray-800;
+}
+
+.calendar-grid {
+    @apply grid grid-cols-7 gap-px p-4;
+}
+
+.weekday {
+    @apply text-sm text-gray-500 font-medium text-center p-2;
+}
+
+.calendar-day {
+    @apply text-sm p-4 text-center hover:bg-gray-50 cursor-pointer transition-colors duration-200;
+}
+
+.calendar-day.prev-month,
+.calendar-day.next-month {
+    @apply text-gray-400;
+}
+
+.calendar-day.today {
+    @apply bg-blue-500 text-white rounded-lg;
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+    .calendar-wrapper {
+        @apply rounded-none shadow-none;
+    }
+
+    .calendar-day {
+        @apply p-2;
+    }
+
+    .month-year {
+        @apply text-lg;
+    }
+
+    #calendar {
+        @apply mx-0;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
+/* Add these styles at the end of the file */
+.bp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.bp-table th, .bp-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.bp-table th {
+    background-color: #f8f9fa;
+}
+
+.bp-table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.calendar-header {
+    @apply flex justify-between items-center mb-4 p-2 sm:p-4 bg-gray-50 rounded-lg text-sm sm:text-base;
+}
+
+.calendar-day {
+    @apply text-center p-1 sm:p-3 text-xs sm:text-base rounded-lg border border-gray-200 hover:border-blue-500 transition duration-150 cursor-pointer;
+}
+
+.calendar-day.empty {
+    background-color: #f8f9fa;
+    @apply bg-gray-50 border-gray-100;
+}
+
+.calendar-day.today {
+    background-color: #007bff;
+    color: white;
+    @apply bg-blue-500 text-white border-blue-500;
+}
+
+.calendar-grid {
+    @apply grid grid-cols-7 gap-1 sm:gap-2;
+}
+
+.calendar-nav {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    @apply bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300;
+}
+
+.calendar-nav:hover {
+    background-color: #0056b3;
+}
+
+.edit-btn, .delete-btn {
+    padding: 5px 10px;
+    margin: 2px;
+    font-size: 0.9em;
+}
+
+.edit-btn {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+}
+
+.edit-btn:hover {
+    background-color: #e0a800;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+.bp-table td {
+    vertical-align: middle;
+    @apply p-4 border-b text-gray-600;
+}
+
+/* Animation keyframes */
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    @apply bg-gray-100 rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-blue-500 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    @apply bg-blue-600;
+}
+
+/* Input styles */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+input[type="date"]::placeholder {
+    color: #9CA3AF;
+}
+
+/* First time login container */
+#firstTimeLogin .container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#firstTimeLogin form input {
+    background-color: #fff;
+}
+
+#firstTimeLogin form input:focus {
+    outline: none;
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+/* Calendar container */
+#calendar {
+    @apply bg-white;
+}
+
+@media (max-width: 640px) {
+    #calendar {
+        @apply mx-0;
+    }
+}
+
+/* Registration form specific styles */
+#firstTimeLogin input {
+    @apply bg-white text-base;
+}
+
+#firstTimeLogin input::placeholder {
+    @apply text-gray-400;
+}
+
+#firstTimeLogin .fa-user,
+#firstTimeLogin .fa-calendar {
+    @apply w-5 h-5 flex items-center justify-center;
+}
+
+#firstTimeLogin input[type="date"]::-webkit-calendar-picker-indicator {
+    @apply opacity-0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    color: transparent;
+    right: 0;
+    top: 0;
+}
+
+#firstTimeLogin input[type="date"] {
+    @apply text-gray-700;
+}
+
+/* History Modal Styles */
+#historyModal {
+    animation: fadeIn 0.2s ease-out;
+}
+
+#historyModal .bg-white {
+    animation: slideIn 0.3s ease-out;
+}
+
+.history-card {
+    @apply bg-white rounded-lg shadow p-4 hover:shadow-md transition-shadow;
+}
+
+.history-card button {
+    @apply flex items-center px-4 py-2 rounded-lg transition-colors text-sm font-medium;
+}
+
+.history-card button i {
+    @apply mr-2;
+}
+
+.history-card .view-btn {
+    @apply bg-blue-500 text-white hover:bg-blue-600;
+}
+
+.history-card .download-btn {
+    @apply bg-green-500 text-white hover:bg-green-600;
+}
+
+.history-card .share-btn {
+    @apply bg-purple-500 text-white hover:bg-purple-600;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 640px) {
+    .history-card .flex {
+        @apply flex-col;
+    }
+    
+    .history-card .flex > div {
+        @apply w-full;
+    }
+    
+    .history-card button {
+        @apply w-full mt-2;
+    }
+}
